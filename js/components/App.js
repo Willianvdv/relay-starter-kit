@@ -1,14 +1,15 @@
 import React from 'react';
 import Relay from 'react-relay';
+import Taxon from './Taxon'
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Widget list</h1>
+        <h1>Taxon list</h1>
         <ul>
-          {this.props.viewer.widgets.edges.map(edge =>
-            <li key={edge.node.id}>{edge.node.name} (ID: {edge.node.id})</li>
+          {this.props.viewer.taxons.edges.map(edge =>
+            <Taxon key={edge.node.id} taxon={edge.node} />
           )}
         </ul>
       </div>
@@ -19,15 +20,15 @@ class App extends React.Component {
 export default Relay.createContainer(App, {
   fragments: {
     viewer: () => Relay.QL`
-      fragment on User {
-        widgets(first: 10) {
+      fragment on Viewer {
+        taxons(first: 10) {
           edges {
             node {
-              id,
-              name,
-            },
-          },
-        },
+              id
+              ${Taxon.getFragment('taxon')}
+            }
+          }
+        }
       }
     `,
   },

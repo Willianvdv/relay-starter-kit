@@ -7,9 +7,6 @@ import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
 
 ReactDOM.render(
-  <Relay.RootContainer
-    Component={App}
-    route={new AppHomeRoute()}
-  />,
+  <Relay.RootContainer Component={App} route={new AppHomeRoute()} />,
   document.getElementById('root')
 );
