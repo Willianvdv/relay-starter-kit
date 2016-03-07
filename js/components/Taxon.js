@@ -22,22 +22,26 @@ class Taxon extends React.Component {
     return (
       <div>
         <h1>{taxon.name}</h1>
-        {taxon.products.edges.map(edge =>
-          <div key={edge.node.id} className="col-sm-6 col-md-4">
-            <div className="thumbnail">
-              <ProductImage product={edge.node} />
-              <div className="caption">
-                <Link to={`/products/${edge.node.slug}`}>
-                  <h3>{edge.node.name}</h3>
-                </Link>
-                <AddToCart viewer={viewer} product={edge.node} />
+        <div className="row">
+          {taxon.products.edges.map(edge =>
+            <div style={{ 'minHeight': '450px' }} key={edge.node.id} className="col-sm-6 col-md-4">
+              <div className="thumbnail">
+                <ProductImage product={edge.node} />
+                <div className="caption">
+                  <Link to={`/products/${edge.node.slug}`}>
+                    <h3>{edge.node.name}</h3>
+                  </Link>
+                  <AddToCart viewer={viewer} product={edge.node} />
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         <div className="row">
-          <a onClick={this._handleLoadMore}>Load more</a>
+          <center>
+            <a onClick={this._handleLoadMore}>Load more</a>
+          </center>
         </div>
       </div>
     );
