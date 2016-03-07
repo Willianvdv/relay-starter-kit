@@ -34,6 +34,7 @@ class Cart extends React.Component {
     return (
       <div className="well">
         <h2>My cart</h2>
+
         {this._renderLineItems(cart.line_items)}
       </div>
     );

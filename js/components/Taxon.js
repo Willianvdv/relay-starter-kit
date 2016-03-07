@@ -5,6 +5,17 @@ import AddToCart from './shared/AddToCart'
 import ProductImage from './shared/ProductImage'
 
 class Taxon extends React.Component {
+  constructor() {
+    super()
+    this._handleLoadMore = this._handleLoadMore.bind(this)
+  }
+
+  _handleLoadMore() {
+    this.props.relay.setVariables({
+      count: this.props.relay.variables.count + 10
+    });
+  }
+
   render() {
     const { taxon, viewer } = this.props;
 
@@ -24,23 +35,32 @@ class Taxon extends React.Component {
             </div>
           </div>
         )}
+
+        <div className="row">
+          <a onClick={this._handleLoadMore}>Load more</a>
+        </div>
       </div>
     );
   }
 }
 
 export default Relay.createContainer(Taxon, {
+  initialVariables: {
+    count: 9
+  },
+
   fragments: {
     viewer: () => Relay.QL`
       fragment on Viewer {
         ${AddToCart.getFragment('viewer')}
       }
     `,
+
     taxon: () => Relay.QL`
       fragment on Taxon {
         id
         name
-        products(first: 10) {
+        products(first: $count) {
           edges {
             node {
               ${ProductImage.getFragment('product')}
