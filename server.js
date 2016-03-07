@@ -20,7 +20,7 @@ var compiler = webpack({
       }
     ]
   },
-  output: {filename: 'app.js', path: '/'}
+  output: {filename: 'app.js', path: '/**'}
 });
 
 var app = new WebpackDevServer(compiler, {

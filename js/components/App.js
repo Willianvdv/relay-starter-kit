@@ -1,17 +1,24 @@
 import React from 'react';
 import Relay from 'react-relay';
 import Taxon from './Taxon'
+import Nav from './Nav'
+import Footer from './Footer'
+import Cart from './Cart'
 
 class App extends React.Component {
   render() {
+    const { children, viewer } = this.props;
+
     return (
       <div>
-        <h1>Taxon list</h1>
-        <ul>
-          {this.props.viewer.taxons.edges.map(edge =>
-            <Taxon key={edge.node.id} taxon={edge.node} />
-          )}
-        </ul>
+        <Nav viewer={viewer} />
+        <Cart viewer={viewer} />
+
+        <div className="container">
+          {children}
+        </div>
+
+        <Footer viewer={viewer} />
       </div>
     );
   }
@@ -21,14 +28,9 @@ export default Relay.createContainer(App, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Viewer {
-        taxons(first: 10) {
-          edges {
-            node {
-              id
-              ${Taxon.getFragment('taxon')}
-            }
-          }
-        }
+        ${Nav.getFragment('viewer')}
+        ${Footer.getFragment('viewer')}
+        ${Cart.getFragment('viewer')}
       }
     `,
   },

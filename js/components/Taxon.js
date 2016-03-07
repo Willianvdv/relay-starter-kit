@@ -1,18 +1,24 @@
 import React from 'react';
 import Relay from 'react-relay';
+import { Link } from 'react-router'
+import AddToCart from './shared/AddToCart'
 
 class Taxon extends React.Component {
   render() {
-    const { taxon } = this.props;
+    const { taxon, viewer } = this.props;
 
     return (
       <div>
         <h1>{taxon.name}</h1>
-        <ul>
-          {taxon.products.edges.map(edge =>
-            <li key={edge.node.id}>{edge.node.name}</li>
-          )}
-        </ul>
+        {taxon.products.edges.map(edge =>
+          <div className="well" key={edge.node.id}>
+            <AddToCart viewer={viewer} product={edge.node} />
+
+            <Link to={`/products/${edge.node.slug}`}>
+              {edge.node.name}
+            </Link>
+          </div>
+        )}
       </div>
     );
   }
@@ -20,6 +26,11 @@ class Taxon extends React.Component {
 
 export default Relay.createContainer(Taxon, {
   fragments: {
+    viewer: () => Relay.QL`
+      fragment on Viewer {
+        ${AddToCart.getFragment('viewer')}
+      }
+    `,
     taxon: () => Relay.QL`
       fragment on Taxon {
         id
@@ -27,8 +38,10 @@ export default Relay.createContainer(Taxon, {
         products(first: 10) {
           edges {
             node {
+              ${AddToCart.getFragment('product')}
               id
               name
+              slug
             }
           }
         }
