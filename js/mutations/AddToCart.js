@@ -7,7 +7,10 @@ export default class AddToCart extends Relay.Mutation {
   }
 
   getVariables() {
-    return { id: this.props.variant.id };
+    return {
+      id: this.props.variant.id,
+      quantity: parseInt(this.props.quantity)
+    };
   }
 
   getFatQuery() {
