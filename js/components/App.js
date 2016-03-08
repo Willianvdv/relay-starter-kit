@@ -3,7 +3,6 @@ import Relay from 'react-relay';
 import Taxon from './Taxon'
 import Nav from './Nav'
 import Footer from './Footer'
-import Cart from './Cart'
 
 class App extends React.Component {
   render() {
@@ -12,7 +11,6 @@ class App extends React.Component {
     return (
       <div>
         <Nav viewer={viewer} />
-        <Cart viewer={viewer} />
 
         <div className="container">
           {children}
@@ -30,7 +28,6 @@ export default Relay.createContainer(App, {
       fragment on Viewer {
         ${Nav.getFragment('viewer')}
         ${Footer.getFragment('viewer')}
-        ${Cart.getFragment('viewer')}
       }
     `,
   },

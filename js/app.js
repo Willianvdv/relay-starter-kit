@@ -7,6 +7,7 @@ import Relay from 'react-relay';
 import App from './components/App';
 import Product from './components/Product';
 import Taxon from './components/Taxon';
+import Cart from './components/Cart';
 
 import AppHomeRoute from './routes/AppHomeRoute';
 
@@ -32,6 +33,7 @@ const container = document.getElementById('root');
 ReactDOM.render((
   <RelayRouter history={useRouterHistory}>
     <Route path="/" component={App} queries={ViewerQueries}>
+      <Route path="cart" component={Cart} queries={ViewerQueries} />
       <Route path="products/:productId" component={Product} queries={ProductQueries} />
       <Route path="t/:taxonId" component={Taxon} queries={TaxonQueries} />
     </Route>

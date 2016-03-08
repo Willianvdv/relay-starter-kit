@@ -1,7 +1,6 @@
 import React from 'react';
 import Relay from 'react-relay';
 import { Link } from 'react-router'
-import AddToCart from './../mutations/AddToCart'
 import ProductImage from './shared/ProductImage'
 
 class Cart extends React.Component {
@@ -32,7 +31,7 @@ class Cart extends React.Component {
     const { cart } = this.props.viewer;
 
     return (
-      <div className="well">
+      <div>
         <h2>My cart</h2>
 
         {this._renderLineItems(cart.line_items)}
@@ -47,6 +46,7 @@ export default Relay.createContainer(Cart, {
       fragment on Viewer {
         cart {
           id
+          quantity
           line_items {
             id
             quantity

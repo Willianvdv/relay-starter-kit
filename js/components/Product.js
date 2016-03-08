@@ -7,7 +7,7 @@ class Product extends React.Component {
     const { product, viewer } = this.props;
 
     return (
-      <div className="well">
+      <div>
         <h1>{product.name}</h1>
         <div>
           {product.description}

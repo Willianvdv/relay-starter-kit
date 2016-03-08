@@ -1,6 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
 import { Link } from 'react-router'
+import AddToCart from './../mutations/AddToCart'
 
 class Nav extends React.Component {
   render() {
@@ -12,6 +13,11 @@ class Nav extends React.Component {
           <div className="navbar-header">
             <a className="navbar-brand" href="#">Relay</a>
             <ul className="nav navbar-nav">
+              <li>
+                <Link to={`/cart`}>
+                 Cart <span className="badge">{viewer.cart.quantity}</span>
+                </Link>
+              </li>
               <li>
                 <Link to={`/t/aanbiedingen`}>
                  Offers
@@ -30,6 +36,9 @@ export default Relay.createContainer(Nav, {
     viewer: () => Relay.QL`
       fragment on Viewer {
         id
+        cart {
+          quantity
+        }
       }
     `,
   },
