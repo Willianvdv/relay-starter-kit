@@ -12,7 +12,23 @@ class Product extends React.Component {
         <div>
           {product.description}
         </div>
-        <AddToCart viewer={viewer} product={product} />
+        <div>
+          <h3>Product properties</h3>
+          <table>
+            <tbody>
+              {product.product_properties.map(product_property =>
+                <tr key={product_property.id}>
+                  <td>{product_property.property.name}</td>
+                  <td>{product_property.value}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Buy now</h3>
+          <AddToCart viewer={viewer} product={product} />
+        </div>
       </div>
     );
   }
@@ -30,6 +46,14 @@ export default Relay.createContainer(Product, {
         id
         name
         description
+        product_properties {
+          id
+          value
+          property {
+            id
+            name
+          }
+        }
         ${AddToCart.getFragment('product')}
       }
     `,
