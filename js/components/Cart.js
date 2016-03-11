@@ -1,7 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
-import { Link } from 'react-router'
-import ProductImage from './shared/ProductImage'
+
+import LineItem from './Cart/LineItem'
 
 class Cart extends React.Component {
   _renderLineItems(line_items) {
@@ -10,21 +10,8 @@ class Cart extends React.Component {
     }
 
     return line_items.map(line_item =>
-       <div key={line_item.id} className="row">
-         <div className="col-md-1">
-           <div className="thumbnail">
-             <ProductImage product={line_item.variant.product} />
-           </div>
-         </div>
-
-         <div className="col-md-7">
-           {line_item.quantity} - 
-           <Link to={`/products/${line_item.variant.product.slug}`}>
-             {line_item.variant.product.name}
-           </Link>
-         </div>
-       </div>
-     )
+      <LineItem line_item={line_item} />
+    )
   }
 
   render() {
@@ -48,16 +35,7 @@ export default Relay.createContainer(Cart, {
           id
           quantity
           line_items {
-            id
-            quantity
-            variant {
-              product {
-                ${ProductImage.getFragment('product')}
-                id
-                name
-                slug
-              }
-            }
+            ${LineItem.getFragment('line_item')}
           }
         }
       }
