@@ -26,9 +26,11 @@ class Nav extends React.Component<void, Props, State> {
                  Cart <span className="badge">{viewer.cart.quantity}</span>
                 </Link>
               </li>
+
               {viewer.taxonomies.map(taxonomy =>
                 <Taxonomy taxonomy={taxonomy} key={taxonomy.id} />
               )}
+
             </ul>
           </div>
         </div>

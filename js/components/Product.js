@@ -1,6 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
 import AddToCart from './shared/AddToCart'
+import ProductImage from './shared/ProductImage'
 
 class Product extends React.Component {
   render() {
@@ -9,6 +10,9 @@ class Product extends React.Component {
     return (
       <div>
         <h1>{product.name}</h1>
+        <div>
+          <ProductImage product={product} />
+        </div>
         <div>
           {product.description}
         </div>
@@ -54,6 +58,7 @@ export default Relay.createContainer(Product, {
             name
           }
         }
+        ${ProductImage.getFragment('product')}
         ${AddToCart.getFragment('product')}
       }
     `,

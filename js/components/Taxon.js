@@ -22,20 +22,27 @@ class Taxon extends React.Component {
     return (
       <div>
         <h1>{taxon.name}</h1>
+        <div>
+          {taxon.description}
+        </div>
         <div className="row">
-          {taxon.products.edges.map(edge =>
-            <div style={{ 'minHeight': '450px' }} key={edge.node.id} className="col-sm-6 col-md-4">
-              <div className="thumbnail">
-                <ProductImage product={edge.node} />
-                <div className="caption">
-                  <Link to={`/products/${edge.node.slug}`}>
-                    <h3>{edge.node.name}</h3>
-                  </Link>
-                  <AddToCart viewer={viewer} product={edge.node} />
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-8">
+            {taxon.products.edges.map(edge =>
+              <div style={{ 'minHeight': '450px' }} key={edge.node.id} className="col-sm-6 col-md-4">
+                <div className="thumbnail">
+                  <ProductImage product={edge.node} />
+                  <div className="caption">
+                    <Link to={`/products/${edge.node.slug}`}>
+                      <h3>{edge.node.name}</h3>
+                    </Link>
+                    <AddToCart viewer={viewer} product={edge.node} />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         <div className="row">
@@ -64,6 +71,7 @@ export default Relay.createContainer(Taxon, {
       fragment on Taxon {
         id
         name
+        description
         products(first: $count) {
           edges {
             node {
