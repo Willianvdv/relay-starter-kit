@@ -13,9 +13,9 @@ class Product extends React.Component {
         <div>
           <ProductImage product={product} />
         </div>
-        <div>
-          {product.description}
-        </div>
+
+        <div dangerouslySetInnerHTML={{ __html: product.description}} />
+
         <div>
           <h3>Product properties</h3>
           <table>
@@ -30,7 +30,7 @@ class Product extends React.Component {
           </table>
         </div>
         <div>
-          <h3>Buy now</h3>
+          <h3>Buy me now!</h3>
           <AddToCart viewer={viewer} product={product} />
         </div>
       </div>
@@ -53,10 +53,7 @@ export default Relay.createContainer(Product, {
         product_properties {
           id
           value
-          property {
-            id
-            name
-          }
+          property { id name }
         }
         ${ProductImage.getFragment('product')}
         ${AddToCart.getFragment('product')}

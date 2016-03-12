@@ -22,26 +22,37 @@ class Taxon extends React.Component {
     return (
       <div>
         <h1>{taxon.name}</h1>
-        <div>
-          {taxon.description}
-        </div>
+        <div dangerouslySetInnerHTML={{ __html: taxon.description}} />
         <div className="row">
-          <div class="col-md-4">
+          <div className="col-md-2">
+            Some pretty component can be added here
           </div>
-          <div class="col-md-8">
-            {taxon.products.edges.map(edge =>
-              <div style={{ 'minHeight': '450px' }} key={edge.node.id} className="col-sm-6 col-md-4">
-                <div className="thumbnail">
-                  <ProductImage product={edge.node} />
-                  <div className="caption">
-                    <Link to={`/products/${edge.node.slug}`}>
-                      <h3>{edge.node.name}</h3>
+          <div className="col-md-10">
+            <div className="row">
+              <div className="row">
+                {taxon.children.map(taxon =>
+                  <div key={taxon.id} className="col-sm-6 col-md-4">
+                    <Link to={`/t/${taxon.permalink}`}>
+                      <h3>{taxon.name}</h3>
                     </Link>
-                    <AddToCart viewer={viewer} product={edge.node} />
+                  </div>
+                )}
+              </div>
+
+              {taxon.products.edges.map(edge =>
+                <div style={{ 'minHeight': '450px' }} key={edge.node.id} className="col-sm-6 col-md-4">
+                  <div className="thumbnail">
+                    <ProductImage product={edge.node} />
+                    <div className="caption">
+                      <Link to={`/products/${edge.node.slug}`}>
+                        <h3>{edge.node.name}</h3>
+                      </Link>
+                      <AddToCart viewer={viewer} product={edge.node} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
 
@@ -72,6 +83,11 @@ export default Relay.createContainer(Taxon, {
         id
         name
         description
+        children {
+          id
+          name
+          permalink
+        }
         products(first: $count) {
           edges {
             node {
