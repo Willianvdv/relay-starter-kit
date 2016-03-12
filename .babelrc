@@ -3,7 +3,10 @@
   "presets": [
     {
       "plugins": [
-        "./build/babelRelayPlugin"
+        "./build/babelRelayPlugin",
+        "syntax-flow",
+        "transform-flow-strip-types",
+        "typecheck"
       ]
     },
     "react",

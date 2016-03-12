@@ -35,10 +35,10 @@ export default Relay.createContainer(LineItem, {
         quantity
         variant {
           product {
-            ${ProductImage.getFragment('product')}
             id
             name
             slug
+            ${ProductImage.getFragment('product')}
           }
         }
       }

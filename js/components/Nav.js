@@ -1,9 +1,14 @@
+// @flow
+
 import React from 'react';
 import Relay from 'react-relay';
 import { Link } from 'react-router'
-import AddToCart from './../mutations/AddToCart'
+import Taxonomy from './Nav/Taxonomy'
 
-class Nav extends React.Component {
+type Props = { viewer: Object }
+type State = {}
+
+class Nav extends React.Component<void, Props, State> {
   render() {
     const { viewer } = this.props;
 
@@ -12,17 +17,18 @@ class Nav extends React.Component {
         <div className="container-fluid">
           <div className="navbar-header">
             <a className="navbar-brand" href="#">Solidus on Relay</a>
+          </div>
+
+          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
               <li>
                 <Link to={`/cart`}>
                  Cart <span className="badge">{viewer.cart.quantity}</span>
                 </Link>
               </li>
-              <li>
-                <Link to={`/t/aanbiedingen`}>
-                 Offers
-                </Link>
-              </li>
+              {viewer.taxonomies.map(taxonomy =>
+                <Taxonomy taxonomy={taxonomy} key={taxonomy.id} />
+              )}
             </ul>
           </div>
         </div>
@@ -36,6 +42,10 @@ export default Relay.createContainer(Nav, {
     viewer: () => Relay.QL`
       fragment on Viewer {
         id
+        taxonomies {
+          id
+          ${Taxonomy.getFragment('taxonomy')}
+        }
         cart {
           quantity
         }

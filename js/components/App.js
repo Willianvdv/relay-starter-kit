@@ -1,10 +1,15 @@
+// @flow
+
 import React from 'react';
 import Relay from 'react-relay';
 import Taxon from './Taxon'
 import Nav from './Nav'
 import Footer from './Footer'
 
-class App extends React.Component {
+type Props = { children: Object, viewer: Object }
+type State = {}
+
+class App extends React.Component<void, Props, State> {
   render() {
     const { children, viewer } = this.props;
 
