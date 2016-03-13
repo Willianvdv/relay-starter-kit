@@ -21,7 +21,7 @@ class Taxonomy extends React.Component<void, Props, State> {
   }
 
   _renderTaxonomy(taxonomy) {
-    if (!taxonomy.root)
+    if (!taxonomy.root.children)
       return null;
 
     return (
@@ -40,13 +40,10 @@ class Taxonomy extends React.Component<void, Props, State> {
 
     return (
       <li className="dropdown" key={taxonomy.id}>
-        <a href="#"
-          className="dropdown-toggle"
-          onClick={this._handleOnClick}
-          data-toggle="dropdown"
-          role="button">
-            {taxonomy.name}<span className="caret"></span>
-        </a>
+        <Link to={'/t/' + taxonomy.root.permalink}>
+          {taxonomy.name}
+        </Link>
+
         <ul className="dropdown-menu" role="menu" aria-labelledby="dLabel">
           {this._renderTaxonomy(taxonomy)}
         </ul>
@@ -54,6 +51,14 @@ class Taxonomy extends React.Component<void, Props, State> {
     );
   }
 }
+
+        // <a href="#"
+        //   className="dropdown-toggle"
+        //   onClick={this._handleOnClick}
+        //   data-toggle="dropdown"
+        //   role="button">
+        //     {taxonomy.name}<span className="caret"></span>
+        // </a>
 
 export default Relay.createContainer(Taxonomy, {
   initialVariables: {
@@ -65,15 +70,18 @@ export default Relay.createContainer(Taxonomy, {
       fragment on Taxonomy {
         id
         name
-        ... @include(if: $expanded) {
-          root {
-            children {
-              id
-              name
-              permalink
+        root {
+          id
+          name
+          permalink
+          ... @include(if: $expanded) {
+              children {
+                id
+                name
+                permalink
+              }
             }
           }
-        }
       }
     `,
   }

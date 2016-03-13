@@ -3,6 +3,7 @@ import Relay from 'react-relay';
 import { Link } from 'react-router'
 import AddToCart from './shared/AddToCart'
 import ProductImage from './shared/ProductImage'
+import ProductPrice from './Product/Price'
 
 class Taxon extends React.Component {
   constructor() {
@@ -47,6 +48,7 @@ class Taxon extends React.Component {
                       <Link to={`/products/${edge.node.slug}`}>
                         <h3>{edge.node.name}</h3>
                       </Link>
+                      <ProductPrice product={edge.node} />
                       <AddToCart viewer={viewer} product={edge.node} />
                     </div>
                   </div>
@@ -92,6 +94,7 @@ export default Relay.createContainer(Taxon, {
           edges {
             node {
               ${ProductImage.getFragment('product')}
+              ${ProductPrice.getFragment('product')}
               ${AddToCart.getFragment('product')}
               id
               name

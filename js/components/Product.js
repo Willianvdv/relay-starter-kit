@@ -2,6 +2,7 @@ import React from 'react';
 import Relay from 'react-relay';
 import AddToCart from './shared/AddToCart'
 import ProductImage from './shared/ProductImage'
+import ProductPrice from './Product/Price'
 
 class Product extends React.Component {
   render() {
@@ -9,7 +10,18 @@ class Product extends React.Component {
 
     return (
       <div>
-        <h1>{product.name}</h1>
+        <div className="row">
+          <div className="col-md-8">
+            <h1>{product.name}</h1>
+          </div>
+
+          <div className="col-md-4">
+            <h3>Buy me now</h3>
+            <ProductPrice product={product} />
+            <AddToCart viewer={viewer} product={product} />
+          </div>
+        </div>
+
         <div>
           <ProductImage product={product} />
         </div>
@@ -28,10 +40,6 @@ class Product extends React.Component {
               )}
             </tbody>
           </table>
-        </div>
-        <div>
-          <h3>Buy me now!</h3>
-          <AddToCart viewer={viewer} product={product} />
         </div>
       </div>
     );
@@ -56,6 +64,7 @@ export default Relay.createContainer(Product, {
           property { id name }
         }
         ${ProductImage.getFragment('product')}
+        ${ProductPrice.getFragment('product')}
         ${AddToCart.getFragment('product')}
       }
     `,
