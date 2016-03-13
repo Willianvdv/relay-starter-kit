@@ -16,10 +16,17 @@ class LineItem extends React.Component {
         </div>
 
         <div className="col-md-7">
-          {line_item.quantity} -
           <Link to={`/products/${line_item.variant.product.slug}`}>
             {line_item.variant.product.name}
           </Link>
+        </div>
+
+        <div className="col-md-1">
+          {line_item.quantity}
+        </div>
+
+        <div className="col-md-2">
+          {line_item.currency} {line_item.price}
         </div>
       </div>
     );
@@ -33,6 +40,8 @@ export default Relay.createContainer(LineItem, {
       fragment on LineItem {
         id
         quantity
+        price
+        currency
         variant {
           product {
             id

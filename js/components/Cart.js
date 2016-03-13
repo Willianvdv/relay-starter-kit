@@ -25,6 +25,11 @@ class Cart extends React.Component<void, Props, void>  {
         <h2>My cart</h2>
 
         {this._renderLineItems(cart.line_items)}
+
+        <div className="row">
+          <div className="col-md-9" />
+          <div className="col-md-2">{cart.currency} {cart.total}</div>
+        </div>
       </div>
     );
   }
@@ -37,6 +42,8 @@ export default Relay.createContainer(Cart, {
         cart {
           id
           quantity
+          currency
+          total
           line_items {
             id
             ${LineItem.getFragment('line_item')}
