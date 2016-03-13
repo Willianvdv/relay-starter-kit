@@ -5,17 +5,7 @@ import Relay from 'react-relay';
 import { Link } from 'react-router'
 
 type Props<Config> = {
-  taxonomy: {
-    __dataID__: string,
-    id: string,
-    name: string,
-    taxons?: [{
-      __dataID__: string,
-      id: string,
-      name: string,
-      permalink: string,
-    }]
-  }
+  taxonomy: Object,
 }
 
 type State<Config> = {}
@@ -30,12 +20,12 @@ class Taxonomy extends React.Component<void, Props, State> {
     this.props.relay.setVariables({ expanded: true });
   }
 
-  _renderTaxonomy(taxons) {
-    if (!taxons)
+  _renderTaxonomy(taxonomy) {
+    if (!taxonomy.root)
       return null;
 
     return (
-      taxons.map(taxon =>
+      taxonomy.root.children.map(taxon =>
         <li key={taxon.id}>
           <Link to={'/t/' + taxon.permalink}>
             {taxon.name}
@@ -58,7 +48,7 @@ class Taxonomy extends React.Component<void, Props, State> {
             {taxonomy.name}<span className="caret"></span>
         </a>
         <ul className="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          {this._renderTaxonomy(taxonomy.taxons)}
+          {this._renderTaxonomy(taxonomy)}
         </ul>
       </li>
     );
@@ -76,10 +66,12 @@ export default Relay.createContainer(Taxonomy, {
         id
         name
         ... @include(if: $expanded) {
-          taxons {
-            id
-            name
-            permalink
+          root {
+            children {
+              id
+              name
+              permalink
+            }
           }
         }
       }

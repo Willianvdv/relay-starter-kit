@@ -6,7 +6,7 @@ import Taxon from './Taxon'
 import Nav from './Nav'
 import Footer from './Footer'
 
-type Props = { children: Object, viewer: Object }
+type Props = { children: ?Object, viewer: Object }
 type State = {}
 
 class App extends React.Component<void, Props, State> {

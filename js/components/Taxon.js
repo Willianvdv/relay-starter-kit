@@ -25,7 +25,7 @@ class Taxon extends React.Component {
         <div dangerouslySetInnerHTML={{ __html: taxon.description}} />
         <div className="row">
           <div className="col-md-2">
-            Some pretty component can be added here
+            FilterFilter
           </div>
           <div className="col-md-10">
             <div className="row">

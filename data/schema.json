@@ -992,6 +992,24 @@
               "deprecationReason": null
             },
             {
+              "name": "product_properties",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": "List",
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "ProductProperty",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "products",
               "description": null,
               "args": [
@@ -1194,19 +1212,15 @@
               "deprecationReason": null
             },
             {
-              "name": "taxons",
+              "name": "root",
               "description": null,
               "args": [
 
               ],
               "type": {
-                "kind": "LIST",
-                "name": "List",
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Taxon",
-                  "ofType": null
-                }
+                "kind": "OBJECT",
+                "name": "Taxon",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
